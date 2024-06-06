@@ -1,5 +1,6 @@
 package com.example.student_management.controller;
 
+import com.example.student_management.common.Constants;
 import com.example.student_management.common.Response;
 import com.example.student_management.dto.StudentDTO;
 import com.example.student_management.entity.ClassRoom;
@@ -48,14 +49,22 @@ public class StudentController {
     public Response createStudent(@RequestBody StudentDTO student) {
         return Response.success().withData(studentService.createStudent(student));
     }
+//    @PostMapping
+//    @ResponseBody
+//    public Response createStudent(@RequestBody StudentDTO student) {
+//        return Response.success().withData(studentService.createStudent(student));
+//    }
+
+
     //sua
     @PutMapping("/update-student/{id}")
-    public ResponseEntity<?> updateStudent(@PathVariable Integer id, @RequestBody Student newstudent) {
+    public Response updateStudent(@PathVariable Integer id, @RequestBody StudentDTO newstudent) {
         Student student = studentService.findStudentById(id);
         if (student == null) {
-            return ResponseEntity.notFound().build();
+//            return ResponseEntity.notFound().build();
+            return Response.error(Constants.RESPONSE_TYPE.ERROR);
         }
-        return ResponseEntity.ok(studentService.updateStudent(id, newstudent));
+        return Response.success().withData(studentService.updateStudent(id,newstudent));
     }
     //xoa
     @DeleteMapping("/delete-student/{id}")
@@ -72,9 +81,8 @@ public class StudentController {
         return studentService.getStudentByClass(idClass);
     }
     @GetMapping("/get/student/{idStudent}")
-    @ResponseBody
-   public Response getStudentByIdStudent(@PathVariable Integer idStudent) {
-        return Response.success().withData(studentService.findStudentById(idStudent));
+   public Student getStudentByIdStudent(@PathVariable Integer idStudent) {
+        return studentService.getStudentById(idStudent);
     }
 
 }
