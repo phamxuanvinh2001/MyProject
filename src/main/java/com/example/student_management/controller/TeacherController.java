@@ -49,7 +49,7 @@ public class TeacherController {
         return ResponseEntity.ok(updateTeacher);
     }
 
-    @GetMapping("/get/class/{idClass}")
+    @GetMapping("/get-class/{idClass}")
     @ResponseBody
     public Response getAllTeacherByIdClass(@PathVariable Integer idClass) {
         return Response.success().withData(teacherService.getTeacherByIdClass(idClass));
